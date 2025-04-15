@@ -7,7 +7,7 @@ AJMRP.Config.Server = AJMRP.Config.Server or {}
 
 AJMRP.Config.Server.MaxProps = 100
 AJMRP.Config.Server.MySQL = {
-    Enabled = false,
+    Enabled = true, -- Set to true for testing
     Host = "localhost",
     Username = "root",
     Password = "",

@@ -7,18 +7,23 @@ function AJMRP.Core:SetupPlayer(ply)
 end
 
 function AJMRP:LoadPlayerData(ply)
-    -- Placeholder for MySQL loading
     AJMRP.Core:Log("Loading data for " .. ply:Nick())
-    -- Check if bio exists
-    if ply:GetNWString("AJMRP_Bio", "") == "" then
-        net.Start("AJMRP_RequestBio")
-        net.Send(ply)
+    if AJMRP.Config.Server.MySQL.Enabled then
+        AJMRP.MySQL:LoadPlayer(ply)
+    else
+        -- Fallback to NetworkVars
+        if ply:GetNWString("AJMRP_Bio", "") == "" then
+            net.Start("AJMRP_RequestBio")
+            net.Send(ply)
+        end
     end
 end
 
 function AJMRP:SavePlayerData(ply)
-    -- Placeholder for MySQL saving
     AJMRP.Core:Log("Saving data for " .. ply:Nick())
+    if AJMRP.Config.Server.MySQL.Enabled then
+        AJMRP.MySQL:SavePlayer(ply)
+    end
 end
 
 util.AddNetworkString("AJMRP_SetBio")

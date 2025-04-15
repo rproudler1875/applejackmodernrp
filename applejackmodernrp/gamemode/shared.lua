@@ -16,6 +16,7 @@ AJMRP.Economy = AJMRP.Economy or {}
 AJMRP.Jobs = AJMRP.Jobs or {}
 AJMRP.Factions = AJMRP.Factions or {}
 AJMRP.Survival = AJMRP.Survival or {}
+AJMRP.Properties = AJMRP.Properties or {}
 
 -- Shared config
 function AJMRP:SetupTeams()
