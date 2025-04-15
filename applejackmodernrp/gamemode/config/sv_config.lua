@@ -1,3 +1,7 @@
+-- Ensure AJMRP and AJMRP.Config are initialized
+AJMRP = AJMRP or {}
+AJMRP.Config = AJMRP.Config or {}
+
 -- Server-side configuration
 AJMRP.Config.Server = AJMRP.Config.Server or {}
 

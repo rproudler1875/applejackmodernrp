@@ -1,4 +1,5 @@
 -- Server-side core functions
+AJMRP = AJMRP or {}
 AJMRP.Core = AJMRP.Core or {}
 
 function AJMRP.Core:SetupPlayer(ply)
