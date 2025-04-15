@@ -5,6 +5,12 @@ AJMRP.Config = AJMRP.Config or {}
 AJMRP.Config.CurrencySymbol = "$"
 AJMRP.Config.StartingMoney = 500
 
+-- Items
+AJMRP.Config.Items = {
+    ["meat"] = { name = "Raw Meat", price = 20 },
+    ["water"] = { name = "Water", price = 10 }
+}
+
 -- Jobs
 TEAM_CITIZEN = 1
 TEAM_POLICE = 2

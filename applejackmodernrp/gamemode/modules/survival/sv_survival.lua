@@ -52,9 +52,27 @@ function AJMRP.Survival:AddFitnessSkill(ply, amount)
     AJMRP.ChatPrint(ply, "Gained " .. amount .. " Fitness Skill!")
 end
 
+function AJMRP.Survival:TreatPlayer(paramedic, patient)
+    if paramedic:Team() ~= TEAM_PARAMEDIC then
+        AJMRP.ChatPrint(paramedic, "Only paramedics can treat players!")
+        return false
+    end
+    if not AJMRP.Economy:HasItem(paramedic, "water") then
+        AJMRP.ChatPrint(paramedic, "You need water to treat ailments!")
+        return false
+    end
+    AJMRP.Economy:RemoveItem(paramedic, "water")
+    patient:SetNWFloat("AJMRP_Thirst", AJMRP.Config.Survival.ThirstMax)
+    patient:SetNWFloat("AJMRP_Fatigue", AJMRP.Config.Survival.FatigueMax)
+    AJMRP.Jobs:AddXP(paramedic, 50)
+    AJMRP.ChatPrint(paramedic, "Treated " .. patient:Nick() .. "'s ailments!")
+    AJMRP.ChatPrint(patient, "You were treated by " .. paramedic:Nick() .. "!")
+    return true
+end
+
 local recipes = {
-    { name = "Steak", hunger = 30, cost = 50 },
-    { name = "Water Bottle", thirst = 40, cost = 20 }
+    { name = "Steak", hunger = 30, ingredients = { ["meat"] = 1 } },
+    { name = "Water Bottle", thirst = 40, ingredients = { ["water"] = 1 } }
 }
 
 net.Receive("AJMRP_CookRecipe", function(len, ply)
@@ -64,11 +82,15 @@ net.Receive("AJMRP_CookRecipe", function(len, ply)
         AJMRP.ChatPrint(ply, "Invalid recipe!")
         return
     end
-    if not AJMRP.Economy:CanAfford(ply, recipe.cost) then
-        AJMRP.ChatPrint(ply, "Not enough money!")
-        return
+    for itemID, amount in pairs(recipe.ingredients) do
+        if not AJMRP.Economy:HasItem(ply, itemID, amount) then
+            AJMRP.ChatPrint(ply, "Missing " .. (AJMRP.Config.Items[itemID].name or itemID) .. "!")
+            return
+        end
     end
-    AJMRP.Economy:TakeMoney(ply, recipe.cost)
+    for itemID, amount in pairs(recipe.ingredients) do
+        AJMRP.Economy:RemoveItem(ply, itemID, amount)
+    end
     if recipe.hunger then
         ply:SetNWFloat("AJMRP_Hunger", math.min(AJMRP.Config.Survival.HungerMax, AJMRP.Survival:GetHunger(ply) + recipe.hunger))
     elseif recipe.thirst then
@@ -91,4 +113,13 @@ hook.Add("PlayerTick", "AJMRP_Survival_Fitness", function(ply)
     if ply:IsSprinting() and math.random() < 0.01 then
         AJMRP.Survival:AddFitnessSkill(ply, 1)
     end
+end)
+
+concommand.Add("ajmrp_treat", function(ply, cmd, args)
+    local target = args[1] and player.GetByID(tonumber(args[1])) or nil
+    if not IsValid(target) then
+        AJMRP.ChatPrint(ply, "Invalid player!")
+        return
+    end
+    AJMRP.Survival:TreatPlayer(ply, target)
 end)
