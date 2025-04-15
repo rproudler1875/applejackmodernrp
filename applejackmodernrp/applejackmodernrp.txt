@@ -1,0 +1,8 @@
+"AppleJackModernisedRP"
+{
+    "base"      "sandbox"
+    "title"     "AppleJack Modernised RP"
+    "version"   "1.0.0"
+    "author"    "xAI Community"
+    "menusystem"    "1"
+}
