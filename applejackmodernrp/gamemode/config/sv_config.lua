@@ -9,8 +9,8 @@ AJMRP.Config.Server.MaxProps = 100
 AJMRP.Config.Server.MySQL = {
     Enabled = true, -- Set to true for testing
     Host = "localhost",
-    Username = "root",
-    Password = "",
+    Username = "ajmrp",
+    Password = "Eggsauce101!",
     Database = "ajmrp",
     Port = 3306
 }
