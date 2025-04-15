@@ -12,6 +12,8 @@ include("modules/factions/cl_factions.lua")
 include("modules/survival/sh_survival.lua")
 include("modules/survival/cl_survival.lua")
 include("entities/entities/ajmrp_cooking_station.lua")
+include("lua/vgui/ajmrp_bio_ui.lua")
+include("lua/vgui/ajmrp_cooking_ui.lua")
 
 function GM:Initialize()
     print("[AJMRP] Client initialized")

@@ -124,9 +124,12 @@ AJMRP.Config.Survival = {
     HungerMax = 100,
     ThirstMax = 100,
     FatigueMax = 100,
+    StaminaMax = 100,
     HungerRate = 0.05, -- Depletes per second
     ThirstRate = 0.07,
     FatigueRate = 0.03,
+    StaminaSprintCost = 0.5, -- Per second
+    StaminaRegenRate = 0.2,
     StatusEffects = {
         Starvation = { threshold = 20, speedMult = 0.7 },
         Dehydration = { threshold = 20, blur = true },

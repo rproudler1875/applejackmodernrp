@@ -18,6 +18,11 @@ end
 
 function ENT:Use(activator, caller)
     if not IsValid(caller) or not caller:IsPlayer() then return end
-    -- TODO: Open cooking UI
-    AJMRP.ChatPrint(caller, "Cooking station used (UI coming soon)!")
+    net.Start("AJMRP_OpenCookingUI")
+    net.Send(caller)
+end
+
+if SERVER then
+    util.AddNetworkString("AJMRP_OpenCookingUI")
+    util.AddNetworkString("AJMRP_CookRecipe")
 end
