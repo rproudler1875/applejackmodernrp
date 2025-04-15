@@ -24,7 +24,7 @@ include("shared.lua")
 include("config/sh_config.lua")
 include("core/sh_core.lua")
 include("core/sh_util.lua")
-include("config/sv_config.lua")
+include("config/sv_config.lua") -- Loads before sv_mysql.lua
 include("core/sv_core.lua")
 include("core/sv_mysql.lua")
 include("modules/economy/sv_economy.lua")
